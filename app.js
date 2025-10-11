@@ -33,6 +33,7 @@ let data = [
 const ticketCardArea = document.querySelector('.ticketCard-area'); 
 const regionSearch = document.querySelector(".regionSearch"); 
 const addTicketBtn = document.querySelector(".addTicket-Btn"); 
+const searchResultText = document.querySelector("#searchResult-text");
 
 //初始載入
 function render(dataList) {
@@ -57,6 +58,10 @@ function render(dataList) {
     `;
   }); 
   ticketCardArea.innerHTML = str ; 
+
+  // ✅ 更新搜尋結果文字
+  // searchResultText.textContent = `本次搜尋共 ${ticketData.length} 筆資料`;
+
 }
 render(data); 
 
@@ -65,11 +70,12 @@ regionSearch.addEventListener("change",function(e) {
   const selected = e.target.value ; 
   if(selected === "全部地區" || selected === "") {
     render(data); 
+    searchResultText.textContent = `本次搜尋共 ${data.length} 筆資料` ; 
     return; 
   }
   const filterData = data.filter(item => item.area === selected); 
   render(filterData); 
-  
+  searchResultText.textContent = `本次搜尋共${filterData.length}筆資料`; 
   //若無資料則顯示提示文字
   if(filterData.length ===0) {
     ticketCardArea.innerHTML = `<p class="noResult">查無此地區套票</p>`;
@@ -105,3 +111,4 @@ addTicketBtn.addEventListener('click',function(e) {
   //重製表單
   document.querySelector(".addTicket-form").reset();
 });
+
